@@ -1,0 +1,1 @@
+main.exe ./grids/grid_lpa_journal.map m
