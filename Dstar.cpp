@@ -20,7 +20,6 @@
 void Dstar::initialise(int startX, int startY, int goalX, int goalY){
 	// 02 Reset the priority queue
 	this->U.clear();
-	make_heap(U.begin(), U.end(), Comp());	
 	maxQLength = 0;
     pathLength = 0;
     vertexAccesses = 0;
@@ -308,13 +307,7 @@ DstarCell * Dstar::Pop(){
 	double minKey1 = INF;
 	double minKey2 = INF;
 
-	// DstarCell * result;
-	DstarCell * result = U.front();
-	// pop_heap(U.begin(), U.end(), Comp());
-	// U.pop_back();
-	U.erase(U.begin());
-	make_heap(U.begin(), U.end(), Comp());		
-	return result;
+	DstarCell * result;
 
 	for (int i = 0; i < pQSize; i++){
 		DstarCell* item = U.at(i);
@@ -335,9 +328,7 @@ DstarCell * Dstar::Pop(){
 		DstarCell* item = U.at(i);
 		if ((item->key[0] == minKey1) && (item->key[1] == minKey2)) {
 			result = U.at(i);
-			std::cout << "I = " << i << std::endl;
 			U.erase(U.begin() + i);
-			make_heap(U.begin(), U.end(), Comp());
 			return result;
 		}
 	}
@@ -351,7 +342,6 @@ void Dstar::Insert(DstarCell * item, int key1, int key2){
 	item->key[0] = key1;
 	item->key[1] = key2;
 	U.push_back(item);
-	push_heap(U.begin(), U.end(), Comp());
 	return;
 }
 
@@ -359,7 +349,6 @@ void Dstar::Insert(DstarCell *item)
 {
 	calcKey(item);
 	U.push_back(item);	
-	push_heap(U.begin(), U.end(), Comp());
 	if (maxQLength < U.size()) maxQLength = U.size();
 	vertexAccesses++;
 	return;
